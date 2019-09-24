@@ -1,0 +1,56 @@
+
+{{article.entry}}
+
+<script>
+function myFunction() {
+  var x = document.getElementById('edit_comment');
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+</script>
+
+{% if owner %}
+    <a href="{% url 'blog_entries:change_article' article.id %}">Change Article</a>
+    <form method='post'>
+        {% csrf_token %}
+        {{delete_article_form}}
+        <input type='submit' value='Delete'>
+    </form>
+{% endif %}
+
+{% if add_comment %}
+    <form method='post' >
+        {% csrf_token %}
+        {{create_comment_form}}
+        <input type='submit' value='create comment'>
+    </form>
+{% endif %}
+
+<ul>
+{% for comment in comments %}:
+
+    <li>{{comment.comment}}
+    {% if comment.delete_comment %}
+    
+        <form method='post'>
+            {% csrf_token %}
+            {{comment.delete_form}}
+            <input type='submit' value='Delete'>
+        </form>
+    {% endif %}
+    {% if comment.edit_comment %}
+        <button onclick="myFunction()">Edit </button>
+        <form method='post' id='edit_comment'>
+            {% csrf_token %}
+            {{comment.edit_form}}
+            <input type='submit' value='Edit comment'>
+        </form>
+    {% endif %}
+    </li>
+{% endfor %}
+</ul>
+
+

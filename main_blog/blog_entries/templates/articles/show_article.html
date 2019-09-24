@@ -1,0 +1,11 @@
+<html>
+<head>
+</head>
+<body>
+<ul>
+    {% for article in article_list %}
+        <li><a href="{% url 'blog_entries:article_details' article.id %}">{{article}}</a></li>
+    {% endfor %}
+</ul>
+</body>
+</html>
